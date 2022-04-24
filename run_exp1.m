@@ -1,9 +1,7 @@
 clc; clear; close all;
 %% input
-p_des = [10,10,-10];
-% x_des = 10;
-% y_des = 10;
-% z_des = -10;
+p_des = [10,20,-10];
+
 %% Object properties
 % Body 
 g = 9.8;
@@ -12,7 +10,6 @@ L = 0.2; % m 【机臂长度】
 Ixx = 0.114; %【转动惯量】
 Iyy = 0.114; %【转动惯量】
 Izz = 0.158; %【转动惯量】
-% I=[Ixx 0 0;0 Iyy 0;0 0 Izz];
 
 % Motor
 k_F = 6.11*10^(-8)*3600/(4*pi^2); %N/(rad/s)^2 【电机转动力系数】
@@ -30,22 +27,28 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-h = sim('exp1_hover');
+simtime = 30;
+h = sim('exp1_hover',simtime);
 
 %% Plot
 t = h.tout;
 figure;
 plot(t,h.position(:,1),t,h.position(:,2),t,h.position(:,3));
 legend('X','Y','Z');
-xlabel('X/m'); ylabel('Y/m');
+xlabel('t/s'); ylabel('Position/m');
 grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));
 
 figure;
 plot(t,h.velocity(:,1),t,h.velocity(:,2),t,h.velocity(:,3));
-grid on;
 legend('V_x','V_y','V_z');
+xlabel('t/s'); ylabel('Velocity (m/s)');
+grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));
 
 figure;
 plot(t,h.angle(:,1),t,h.angle(:,2),t,h.angle(:,3));
-grid on;
 legend('\phi','\theta','\psi');
+xlabel('t/s'); ylabel('Angle/rad');
+grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));

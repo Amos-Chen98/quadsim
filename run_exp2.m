@@ -2,9 +2,9 @@ clc; clear; close all;
 %% input
 p_des = [10,10,-10];
 state_track = [0,0,0,0;
-                10,0,-10,1;
+                10,0,-10,0.5;
                10,10,-10,1;
-               0,10,-10,1;
+               0,10,-10,0.5;
               0,0,0,1];
 %% Object properties 
 % Body 
@@ -14,7 +14,6 @@ L = 0.2; % m 【机臂长度】
 Ixx = 0.114; %【转动惯量】
 Iyy = 0.114; %【转动惯量】
 Izz = 0.158; %【转动惯量】
-% I=[Ixx 0 0;0 Iyy 0;0 0 Izz];
 
 % Motor
 k_F = 6.11*10^(-8)*3600/(4*pi^2); %N/(rad/s)^2 【电机转动力系数】
@@ -39,7 +38,8 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-h = sim('exp2_tracking');
+simtime = 100;
+h = sim('exp2_tracking',simtime);
 t = h.tout;
 v = sqrt(sum(h.velocity.^2,2));
 
@@ -51,25 +51,28 @@ axis equal;
 grid on;
 set(gca,'LooseInset',get(gca,'TightInset'));
 
+figure;
+yyaxis left
+plot(t,h.position(:,1),'r-',t,h.position(:,2),'g-',t,h.position(:,3),'b-'); hold on;
+ylabel('Position/m');
+yyaxis right
+plot(t,v,'m-');
+ylabel('Velocity (m/s)');
+xlabel('t/s'); 
+legend('X','Y','Z','v');
+grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));
 
-% figure;
-% plot(t,h.position(:,1),t,h.position(:,2),t,h.position(:,3)); hold on;
-% plot(t,v,'--');
-% xlabel('t/s'); ylabel('Position/m');
-% legend('X','Y','Z','v');
-% grid on;
-% set(gca,'LooseInset',get(gca,'TightInset'));
-% 
-% figure;
-% plot(t,h.velocity(:,1),t,h.velocity(:,2),t,h.velocity(:,3));
-% xlabel('t/s'); ylabel('V/(m/s)');
-% legend('V_x','V_y','V_z');
-% grid on;
-% set(gca,'LooseInset',get(gca,'TightInset'));
-% 
-% figure;
-% plot(t,h.angle(:,1),t,h.angle(:,2),t,h.angle(:,3));
-% xlabel('t/s'); ylabel('Angle/rad');
-% legend('\phi','\theta','\psi');
-% grid on;
-% set(gca,'LooseInset',get(gca,'TightInset'));
+figure;
+plot(t,h.velocity(:,1),t,h.velocity(:,2),t,h.velocity(:,3));
+xlabel('t/s'); ylabel('V/(m/s)');
+legend('V_x','V_y','V_z');
+grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));
+
+figure;
+plot(t,h.angle(:,1),t,h.angle(:,2),t,h.angle(:,3));
+xlabel('t/s'); ylabel('Angle/rad');
+legend('\phi','\theta','\psi');
+grid on;
+set(gca,'LooseInset',get(gca,'TightInset'));

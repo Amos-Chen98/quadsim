@@ -44,7 +44,8 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-h = sim('exp3_2_formation_circle');
+simtime = 50;
+h = sim('exp3_2_formation_circle',simtime);
 t = h.tout;
 
 quad1.position = h.quad1(:,1:3);
@@ -75,8 +76,8 @@ for i = 1:5:size(t,1)
     p1(i) = scatter(quad1.position(i,1),quad1.position(i,2),'r'); hold on;
     p2(i) = scatter(quad2.position(i,1),quad2.position(i,2),'g'); hold on;
     p3(i) = scatter(quad3.position(i,1),quad3.position(i,2),'b'); hold on;
+    xlabel('X/m'); ylabel('Y/m');
     axis equal;
-%     set(gcf,'position',[0,0,1920,1080]);
     pause(0.001);
     if i > 30
         delete(p1(i-30)); delete(p2(i-30)); delete(p3(i-30));
@@ -88,11 +89,9 @@ figure;
 plot(quad1.position(:,1),quad1.position(:,2),'r',...
     quad2.position(:,1),quad2.position(:,2),'g',...
     quad3.position(:,1),quad3.position(:,2),'b'); hold on;
-% plot(p_des_f1(:,1),p_des_f1(:,2),'--');
 
 xlabel('X/m'); ylabel('Y/m');
 legend('quad1','quad2','quad3');
 axis equal;
 grid on;
 set(gca,'LooseInset',get(gca,'TightInset'));
-% set(gcf,'position',[0,0,1920,1080]);
