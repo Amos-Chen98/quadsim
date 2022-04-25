@@ -23,12 +23,11 @@
 有两种运行仿真的方式：
 
 1. APP运行模式：运行QuadSim.mlapp可打开GUI界面，随后可以在GUI界面中输入仿真参数并获得输出。GUI界面比较精美，但受限于界面画幅，输出的信息有限。
-
 2. 脚本运行模式：有四个平行的.m脚本文件，分别对应四个实验，功能是将参数加载进工作空间，运行Simulink仿真，并输出详尽的仿真结果。
 
-![image-20220424233225479](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2022/20220424233225.png)
+![image-20220425170230834](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2022/20220425170230.png)
 
-3Dplot_fcns文件夹中是绘制3D动画（如下）的函数，由指导教师提供。该文件夹在APP运行时（在实验一与实验二中）被调用。由于该函数运行缓慢，因此实验三与实验四的动态效果图由本人编写的动态绘图代码实现。
+3Dplot_fcns文件夹中是绘制3D动画（如下）的函数，在APP运行时（在实验一与实验二中）被调用。由于该函数运行缓慢，因此实验三与实验四的动态效果图由本人编写的动态绘图代码实现。
 
 ![image-20220424233237792](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2022/20220424233237.png)
 
