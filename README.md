@@ -1,5 +1,15 @@
 # quadsim
- 北京航空航天大学《四旋翼飞行器建模仿真综合实验》
+北京航空航天大学《四旋翼飞行器建模仿真综合实验》，提供了MATLAB APP运行与脚本运行两种方式，实现四旋翼控制仿真。仿真功能：定点悬停、航路跟踪、编队飞行。
+
+
+
+三机“一”字编队航路跟踪：
+
+![exp3](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2022/20220425165553.gif)
+
+三机圆形编队兴趣点环绕：
+
+![exp4](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2022/20220425165640.gif)
 
 ## 实验内容
 
@@ -27,3 +37,4 @@
 ## 原理与建模过程
 
 请见实验报告。
+

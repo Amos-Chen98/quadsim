@@ -1,5 +1,6 @@
 clc; clear; close all;
-%% input
+%% input（北-东-地系下）
+simtime = 30;
 p_des = [10,20,-10];
 
 %% Object properties
@@ -27,7 +28,6 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-simtime = 30;
 h = sim('exp1_hover',simtime);
 
 %% Plot

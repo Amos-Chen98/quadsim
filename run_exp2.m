@@ -1,5 +1,6 @@
 clc; clear; close all;
-%% input
+%% input（北-东-地系下）
+simtime = 100;
 p_des = [10,10,-10];
 state_track = [0,0,0,0;
                 10,0,-10,0.5;
@@ -38,7 +39,6 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-simtime = 100;
 h = sim('exp2_tracking',simtime);
 t = h.tout;
 v = sqrt(sum(h.velocity.^2,2));

@@ -1,5 +1,6 @@
 clc; clear; close all;
-%% input
+%% input（北-东-地系下）
+simtime = 50;
 % 航路
 formation = [0,0,5,20,2];
 % 圆形编队 = [圆心x，圆心y，高度z，半径R，速度标量v] (5*1维)
@@ -44,24 +45,28 @@ kp_theta = 2000; kd_theta = 4000;
 kp_psi = 800; kd_psi = 4000;
 
 %% Run simulator
-simtime = 50;
 h = sim('exp3_2_formation_circle',simtime);
 t = h.tout;
+% 原始信息（北-东-地坐标系下）
+% quad1.position = h.quad1(:,1:3);
+% quad1.velocity = h.quad1(:,4:6);
+% quad1.v_scalar = sqrt(sum(quad1.velocity.^2,2));
+% quad1.angle = h.quad1(:,7:9);
+%
+% quad2.position = h.quad2(:,1:3);
+% quad2.velocity = h.quad2(:,4:6);
+% quad2.v_scalar = sqrt(sum(quad2.velocity.^2,2));
+% quad2.angle = h.quad2(:,7:9);
+%
+% quad3.position = h.quad3(:,1:3);
+% quad3.velocity = h.quad3(:,4:6);
+% quad3.v_scalar = sqrt(sum(quad3.velocity.^2,2));
+% quad3.angle = h.quad3(:,7:9);
 
-quad1.position = h.quad1(:,1:3);
-quad1.velocity = h.quad1(:,4:6);
-quad1.v_scalar = sqrt(sum(quad1.velocity.^2,2));
-quad1.angle = h.quad1(:,7:9);
-
-quad2.position = h.quad2(:,1:3);
-quad2.velocity = h.quad2(:,4:6);
-quad2.v_scalar = sqrt(sum(quad2.velocity.^2,2));
-quad2.angle = h.quad2(:,7:9);
-
-quad3.position = h.quad3(:,1:3);
-quad3.velocity = h.quad3(:,4:6);
-quad3.v_scalar = sqrt(sum(quad3.velocity.^2,2));
-quad3.angle = h.quad3(:,7:9);
+% 转换到 东-北-天系下的位置
+quad1.position = [h.quad1(:,2),h.quad1(:,1),-h.quad1(:,3)];
+quad2.position = [h.quad2(:,2),h.quad2(:,1),-h.quad2(:,3)];
+quad3.position = [h.quad3(:,2),h.quad3(:,1),-h.quad3(:,3)];
 
 %% Dynamic plot
 figure;
@@ -69,18 +74,18 @@ x = formation(1);
 y = formation(2);
 R = formation(4);
 rectangle('Position',[x-R,y-R,2*R,2*R],'Curvature',[1,1],'linewidth',1,'linestyle','--'); hold on;
-
 rectangle('Position',[x-1.5*R,y-1.5*R,3*R,3*R],'Curvature',[1,1],'edgecolor','white'); hold on;
+title('东-北-天坐标系下动态过程');
 
-for i = 1:5:size(t,1)
+for i = 1:10:size(t,1)
     p1(i) = scatter(quad1.position(i,1),quad1.position(i,2),'r'); hold on;
     p2(i) = scatter(quad2.position(i,1),quad2.position(i,2),'g'); hold on;
     p3(i) = scatter(quad3.position(i,1),quad3.position(i,2),'b'); hold on;
     xlabel('X/m'); ylabel('Y/m');
     axis equal;
     pause(0.001);
-    if i > 30
-        delete(p1(i-30)); delete(p2(i-30)); delete(p3(i-30));
+    if i > 50
+        delete(p1(i-50)); delete(p2(i-50)); delete(p3(i-50));
     end
 end
 
@@ -89,7 +94,7 @@ figure;
 plot(quad1.position(:,1),quad1.position(:,2),'r',...
     quad2.position(:,1),quad2.position(:,2),'g',...
     quad3.position(:,1),quad3.position(:,2),'b'); hold on;
-
+title('东-北-天坐标系');
 xlabel('X/m'); ylabel('Y/m');
 legend('quad1','quad2','quad3');
 axis equal;
